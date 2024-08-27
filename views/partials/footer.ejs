@@ -1,0 +1,227 @@
+<footer class="animate__animated animate__fadeInUp">
+  <div class="footer-separator"></div>
+  <div class="footer-container">
+    <div class="container">
+      <div class="row">
+        <div
+          class="offset-lg-3 col-lg-6 offset-md-2 col-md-8 animate__animated animate__fadeIn"
+        >
+          <div class="footer-box">
+            <h2 class="heading text-center">FEEDBACK</h2>
+            <p class="text-center my-2">
+              <b
+                >Teilen Sie Ihre Erfahrungen mit uns! Wir schätzen Ihre Meinung
+                sehr. Bitte nutzen Sie das unten stehende Formular, um uns Ihr
+                Feedback zu senden. Egal ob Lob, Kritik oder Anregungen – Ihr
+                Feedback ist entscheidend für unsere stetige Verbesserung.
+                Verpassen Sie nicht die Gelegenheit, Ihre Stimme zu erheben und
+                unsere Angebote zu optimieren!</b
+              >
+            </p>
+            <form class="cf-form row" method="POST" action="/contact.php">
+              <img
+                src="/image/star_showcase.png"
+                style="
+                  position: absolute;
+                  right: -25px;
+                  top: -15px;
+                  width: 165px;
+                "
+                data-bs-toggle="tooltip"
+                title="Teilen Sie Ihr Sternen-Feedback!"
+              />
+              <input type="hidden" name="admincontact" value="yes" />
+              <div class="form-group col-sm-12">
+                <input
+                  required
+                  type="text"
+                  name="uname"
+                  placeholder="Max Mustermann"
+                  class="form-control-lc"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <input
+                  required
+                  type="email"
+                  name="uemail"
+                  placeholder="Deine@Email.de"
+                  class="form-control-lc"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <input
+                  required
+                  type="number"
+                  name="unumber"
+                  placeholder="+49 xxxx xxxxxx"
+                  class="form-control-lc"
+                />
+              </div>
+              <div class="form-group col-sm-12">
+                <textarea
+                  required
+                  class="form-control-lc"
+                  name="umsg"
+                  row="4"
+                  placeholder="Deine Nachricht...."
+                ></textarea>
+              </div>
+              <div class="form-group col-sm-12">
+                <center>
+                  <div
+                    class="g-recaptcha"
+                    data-theme="dark"
+                    data-sitekey="6LdD5KcpAAAAAF0LL0k02LE2cDN6x5IXKLxaKx_x"
+                    data-callback="captchaSubmit"
+                  ></div>
+                </center>
+              </div>
+              <div class="form-group col-sm-12">
+                <button class="btn btn-vj_orange w-100">
+                  Nachricht senden
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyright text-center text-vj_orange p-2">
+    <p class="m-0">&copy; <span id="curyear"></span> Personal Peak 360°</p>
+  </div>
+</footer>
+<style>
+  .footer-container {
+    padding: 30px 0;
+    background: <%= secondaryColor %>;
+    color: rgb(255, 255, 255);
+  }
+  .footer-separator {
+    background: <%= secondaryColor %>;
+    min-height: 100px;
+    border-top: 10px solid <%= primaryColor %>;
+    background-size: cover;
+  }
+
+  footer {
+    margin-top: 100px;
+  }
+
+  footer .heading {
+    color: <%= primaryColor %>;
+    text-align: left;
+  }
+
+  footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  footer ul li a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  footer ul li a:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  footer ul li {
+    padding-bottom: 10px;
+    margin: 5px 0;
+    border-bottom: 2px solid #ffff0000;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  footer ul li:hover {
+    border-color: #14ff68;
+    color: #14ff18;
+  }
+
+  footer ul li span {
+    margin-right: 10px;
+  }
+
+  form.cf-form {
+    color: white;
+    background: black;
+    padding: 20px 30px;
+    position: relative;
+    border: 2px solid #2b3e50;
+  }
+
+  form.cf-form div.row {
+    padding: 20px 30px;
+    background: #000000cc;
+    margin: 0;
+  }
+
+  .form-control-lc {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid #2e3b50;
+    outline: 0;
+    color: #fff;
+    font-size: 1.3rem;
+    transition: 0.2s;
+  }
+
+  .form-control-lc:focus {
+    border-color: #ffffffbd;
+  }
+
+  button.mybtn {
+    font-weight: 500;
+    border: 0;
+    outline: 0;
+    padding: 10px;
+    border-radius: 30px;
+    background: <%= primaryColor %>;
+    color: #2b3e50;
+    transition: 0.2s;
+  }
+
+  button.mybtn:hover {
+    background: <%= primaryColor %>;
+  }
+  footer .copyright {
+    background: rgb(39, 39, 23);
+  }
+
+  div#rc-anchor-container {
+    border: 0 !important;
+  }
+</style>
+<script>
+  var x = new Date();
+  document.getElementById("curyear").innerHTML = x.getFullYear();
+  var formreadyToSubmit = false;
+  function captchaSubmit(token) {
+    $(".g-recaptcha .recaptchaerrorbox").remove();
+    var response = grecaptcha.getResponse();
+    if (response.length === 0) {
+      formreadyToSubmit = false;
+    } else {
+      formreadyToSubmit = true;
+      $(".m-alert").remove();
+    }
+  }
+  $(document).ready(function () {
+    $("form.cf-form").submit(function () {
+      if (!formreadyToSubmit) {
+        $(".m-alert").remove();
+        $(".g-recaptcha").append(
+          "<p class='m-alert m-0 mt-2 text-danger'><b>Captcha Required!</b></p>"
+        );
+        return false;
+      }
+    });
+  });
+</script>

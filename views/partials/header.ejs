@@ -1,0 +1,157 @@
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"
+/>
+
+<meta
+  name="description"
+  content="Calculate various health indicators including hormone levels, fat percentage, FFMI, glycogen levels, and more based on patient's skin fold measurements. Visit Personal Peak 360 for accurate health assessments."
+/>
+<meta
+  name="keywords"
+  content="health calculator, skin fold measurement, hormone levels, fat percentage, FFMI, glycogen levels"
+/>
+<meta name="author" content="Vijay Singh" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#ffffff" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/android-chrome-512x512.png" />
+<meta name="application-name" content="Personal Peak 360" />
+<meta name="msapplication-tooltip" content="Health Calculator" />
+<meta name="msapplication-starturl" content="/" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta
+  http-equiv="Cache-Control"
+  content="no-cache, no-store, must-revalidate"
+/>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="192x192"
+  href="/android-chrome-192x192.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="512x512"
+  href="/android-chrome-512x512.png"
+/>
+
+<script src="/js/bs.js"></script>
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/bs.css" />
+<script
+  src="https://kit.fontawesome.com/a076d05399.js"
+  crossorigin="anonymous"
+></script>
+<script src="/js/jquery.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  body {
+    overflow-x: hidden;
+    font-family: "Quicksand", sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  g5,
+  h6,
+  p {
+    font-family: "Quicksand", sans-serif;
+  }
+  .tbl-ctr {
+    width: 100%;
+    overflow-x: scroll;
+    text-align: center;
+  }
+  .form-group {
+    display: block;
+    margin: 10px 0;
+  }
+  .text-right {
+    text-align: right;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nobreakoverflow {
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .card .card-header {
+    background: #ffb63b;
+    color: black;
+    text-align: center;
+  }
+  .card {
+    border-color: #ffb63b;
+    margin: 5px 0;
+  }
+  .card .card-footer {
+    background: white;
+  }
+  .hover-zoom {
+    transition: 0.2s;
+    padding: 0 calc(var(--bs-gutter-x));
+    cursor: pointer;
+  }
+
+  .hover-zoom:hover {
+    padding: 0 calc(var(--bs-gutter-x) * 0.5);
+  }
+  .text-mint {
+    color: rgb(11 94 82) !important;
+  }
+  .text-vj_grey {
+    color: #2b3e50 !important;
+  }
+  .text-vj_orange {
+    color: #ffb63b !important;
+  }
+  .bg-vj_grey {
+    background: #2b3e50 !important;
+  }
+  .bg-vj_orange {
+    background: #ffb63b !important;
+  }
+  .btn-vj_orange {
+    --bs-btn-color: #2b3e50;
+    --bs-btn-bg: #ffb63b;
+    --bs-btn-border-color: #ffa000;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #ffa000;
+    --bs-btn-hover-border-color: #ffa000;
+    --bs-btn-focus-shadow-rgb: 50, 62, 80;
+    --bs-btn-active-color: #787878;
+    --bs-btn-active-bg: #ffa715;
+    --bs-btn-active-border-color: #ffa000;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #ffb63b;
+    --bs-btn-disabled-bg: #ffc86b;
+    --bs-btn-disabled-border-color: #ffa000;
+  }
+</style>
