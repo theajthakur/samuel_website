@@ -11,15 +11,15 @@ router.get("/", restrictTo(["NORMAL", "ADMIN"]), async (req, res) => {
   });
 });
 
-router.get("/signup", async (req, res) => {
-  return res.render("signup");
-});
+// router.get("/signup", async (req, res) => {
+//   return res.render("signup");
+// });
 
 router.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
-router.post("/signup", handleUserSignUp);
+// router.post("/signup", handleUserSignUp);
 
 router.post("/login", handleUserLogin);
 
