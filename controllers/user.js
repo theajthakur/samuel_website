@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 async function handleUserSignUp(req, res) {
   const { name, email, password } = req.body;
@@ -32,7 +33,7 @@ async function handleUserSignUp(req, res) {
 async function handleUserLogin(req, res) {
   const { email, password, "g-recaptcha-response": recaptchaToken } = req.body;
 
-  const secretKey = "6LdD5KcpAAAAALKexBlPfvJCwzLeDVGu-EAaq-XW";
+  const secretKey = process.env.SECRET_KEY;
   const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
 
   try {
