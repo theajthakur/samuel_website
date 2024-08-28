@@ -72,7 +72,15 @@ async function handleUserLogin(req, res) {
   }
 }
 
+async function handleHomepage(req, res) {
+  const allurls = await User.findOne({ email: req.user.email });
+  return res.render("home", {
+    username: req.user?.name,
+  });
+}
+
 module.exports = {
   handleUserSignUp,
   handleUserLogin,
+  handleHomepage,
 };
