@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const axios = require("axios");
+const bcrypt = require("bcrypt");
 
 async function handleUserSignUp(req, res) {
   const { name, email, password } = req.body;
@@ -44,20 +45,24 @@ async function handleUserLogin(req, res) {
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: { email } });
+
     if (!user) {
       return res.render("login", {
         error: "Invalid Email",
       });
-    } else if (user.password !== password) {
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res.render("login", {
         error: "Invalid Password",
       });
-    } else {
-      const token = setUser(user);
-      res.cookie("token", token);
-      return res.redirect("/");
     }
+
+    const token = setUser(user);
+    res.cookie("token", token);
+    return res.redirect("/");
   } catch (error) {
     console.error("Error during reCAPTCHA verification:", error);
     return res.render("login", {
