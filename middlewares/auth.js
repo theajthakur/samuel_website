@@ -22,7 +22,15 @@ function restrictTo(role = []) {
     next();
   };
 }
+
+function NotrestrictTo(role = []) {
+  return function (req, res, next) {
+    if (req.user) return res.redirect("/");
+    next();
+  };
+}
 module.exports = {
   checkForAuthentication,
   restrictTo,
+  NotrestrictTo,
 };

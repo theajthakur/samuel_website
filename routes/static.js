@@ -1,10 +1,10 @@
 const express = require("express");
-const { restrictTo } = require("../middlewares/auth");
+const { restrictTo, NotrestrictTo } = require("../middlewares/auth");
 const { handleUserSignUp, handleUserLogin } = require("../controllers/user");
 const User = require("../models/User");
 const router = express.Router();
 
-router.get("/", restrictTo(["NORMAL", "ADMIN"]), async (req, res) => {
+router.get("/", restrictTo(["NORMAL"]), async (req, res) => {
   const allurls = await User.findOne({ email: req.user.email });
   return res.render("home", {
     username: req.user?.name,
@@ -15,7 +15,7 @@ router.get("/", restrictTo(["NORMAL", "ADMIN"]), async (req, res) => {
 //   return res.render("signup");
 // });
 
-router.get("/login", (req, res) => {
+router.get("/login", NotrestrictTo(["NORMAL"]), (req, res) => {
   res.render("login.ejs");
 });
 
