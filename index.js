@@ -2,9 +2,14 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const staticRoute = require("./routes/static");
+const superRoute = require("./routes/super");
 require("dotenv").config();
 
-const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
+const {
+  checkForAuthentication,
+  checkForSuperAuth,
+  restrictTo,
+} = require("./middlewares/auth");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -25,6 +30,7 @@ app.use(cookieParser());
 app.use(checkForAuthentication);
 
 app.use("/", staticRoute);
+app.use("/super", checkForSuperAuth, superRoute);
 
 app.listen(8000, () => {
   console.log("Server Started!");

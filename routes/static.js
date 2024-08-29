@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", restrictTo(["NORMAL"]), handleHomepage);
 
-router.get("/login", NotrestrictTo(["NORMAL"]), (req, res) => {
+router.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 

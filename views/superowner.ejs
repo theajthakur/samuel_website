@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin Panel</title>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <div class="full-container">
+      <div class="row">
+        <div class="col-md-4 col-lg-3">
+          <div class="sidebar">
+            <div class="header text-center p-2">
+              <img src="/image/logo.png" />
+            </div>
+            <div class="body">
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-lg-9">
+          <div class="main-container">
+            <div class="head">
+              <h3 class="m-0 title"></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const divMap = [
+        [1, "Introduction", "user"],
+        [2, "Message", "comment"],
+        [3, "History", "history"],
+      ];
+      $(document).ready(() => {
+        divMap.forEach((d) => {
+          $(".full-container .sidebar .body ul").append(
+            "<li data-id='" +
+              d[0] +
+              "'><span class='fa fa-" +
+              d[2] +
+              "'></span>" +
+              d[1] +
+              "</li>"
+          );
+          $(".full-container .sidebar .body ul li").click(function () {
+            const targetId = $(this).data("id");
+            $(".full-container .sidebar .body ul li").removeClass("active");
+            $(this).addClass("active");
+            $(".full-container .main-container .head .title").text(
+              divMap.find((d) => d[0] == targetId)[1]
+            );
+          });
+
+          $(".full-container .sidebar .body ul li[data-id=1]").click();
+        });
+      });
+    </script>
+    <style>
+      @media only screen and (width>= 768px) {
+        .full-container {
+          height: 100vh;
+          overflow: hidden;
+        }
+
+        .full-container .sidebar,
+        .full-container .main-container {
+          height: 100vh;
+        }
+
+        .full-container .sidebar .body {
+          height: calc(80vh - 20px);
+          overflow-x: hidden;
+        }
+      }
+
+      .full-container .sidebar {
+        background: #0f003a;
+      }
+
+      .full-container .sidebar .header {
+        height: 20vh;
+        background: linear-gradient(45deg, #ffffff24, transparent, #ffffff24);
+      }
+
+      .full-container .sidebar .header img {
+        max-height: 100%;
+        padding: 1rem;
+      }
+
+      .full-container .sidebar .body ul {
+        padding: 0;
+        list-style: none;
+        margin: 0;
+        color: white;
+        background: #ffffff14;
+      }
+
+      .full-container .sidebar .body ul li {
+        padding: 0.3rem 2rem;
+        cursor: pointer;
+        transition: 0.1s;
+      }
+
+      .full-container .sidebar .body ul li:hover {
+        background: #ffffff14;
+      }
+
+      .full-container .sidebar .body ul li.active {
+        background: #ffffff26;
+      }
+
+      .full-container .main-container .head {
+        text-align: center;
+        height: 20vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 3px 3px 0 #00000017;
+      }
+    </style>
+  </body>
+</html>

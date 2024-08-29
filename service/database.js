@@ -7,9 +7,7 @@ const sequelize = new Sequelize("nodejs", "root", "", {
 
 async function syncDatabase() {
   try {
-    // Sync all models
-    await sequelize.sync({ force: false }); // `force: true` will drop the table if it exists and recreate it
-
+    await sequelize.sync({ force: true });
     console.log("Database synchronized successfully.");
   } catch (error) {
     console.error("Error synchronizing the database:", error);

@@ -80,8 +80,25 @@ async function handleHomepage(req, res) {
   });
 }
 
+async function handleSuperLogin(req, res) {
+  const email = "samuel@admin.com";
+  const pass = "1234";
+  if (req.body.email == email && req.body.password == pass) {
+    const user = {
+      username: "Samuel Hufnagel",
+    };
+    const token = setUser(user);
+    res.cookie("super_token", token);
+    return res.send("/super");
+  } else {
+    return res.render("superadmin_login.ejs", {
+      error: "Invalid Credentials!",
+    });
+  }
+}
 module.exports = {
   handleUserSignUp,
   handleUserLogin,
   handleHomepage,
+  handleSuperLogin,
 };
