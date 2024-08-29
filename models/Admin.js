@@ -31,11 +31,25 @@ const Admin = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    primaryColor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "rgb(255, 182, 59)",
+    },
+    secondaryColor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "rgb(2, 26, 54)",
+    },
+    logoName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "logo.png",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// Export the model
 module.exports = Admin;

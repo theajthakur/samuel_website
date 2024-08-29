@@ -1,10 +1,15 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../service/database"); // Adjust the path to your Sequelize instance
+const sequelize = require("../service/database");
 
 // Define the User model
 const User = sequelize.define(
   "User",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,18 +21,25 @@ const User = sequelize.define(
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false, // Required field
-      defaultValue: "NORMAL", // Default value
+      allowNull: false,
+      defaultValue: "NORMAL",
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false, // Required field
+      allowNull: false,
+    },
+    parent: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Admins", // Matches the table name of the Admin model
+        key: "id",
+      },
+      onDelete: "CASCADE",
     },
   },
   {
-    timestamps: true, // Automatically add `createdAt` and `updatedAt` fields
+    timestamps: true,
   }
 );
 
-// Export the model
 module.exports = User;

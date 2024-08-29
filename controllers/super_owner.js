@@ -1,4 +1,5 @@
 const { setUser, getUser } = require("../service/auth");
+const Admin = require("../models/Admin");
 
 async function handleSuperLogin(req, res) {
   const email = "samuel@admin.com";
