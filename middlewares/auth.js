@@ -13,38 +13,25 @@ function checkForAuthentication(req, res, next) {
   next();
 }
 
-function checkForSuperAuth(req, res, next) {
-  const tokenCookie = req.cookies?.super_token;
-  req.user = null;
-
-  if (!tokenCookie) return next();
-
-  const token = tokenCookie;
-  if (!token) return null;
-  const user = getUser(token);
-  req.user = user;
-  next();
-}
-
-function restrictTo(role = []) {
+function restrictTo(role = [], refer = "/login") {
   return function (req, res, next) {
-    if (!req.user) return res.redirect("/login");
+    if (!req.user) return res.redirect(refer);
 
-    if (!role.includes(req.user.role)) return res.end("unauthorised");
+    if (!role.includes(req.user.role))
+      return res.send("unauthorised <a href='/logout'>logout</a>");
 
     next();
   };
 }
 
-function NotrestrictTo(role = []) {
+function NotrestrictTo(role = [], refer = "/") {
   return function (req, res, next) {
-    if (req.user) return res.redirect("/");
+    if (req.user) return res.redirect(refer);
     next();
   };
 }
 module.exports = {
   checkForAuthentication,
-  checkForSuperAuth,
   restrictTo,
   NotrestrictTo,
 };

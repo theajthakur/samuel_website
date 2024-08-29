@@ -22,6 +22,113 @@
             <div class="head">
               <h3 class="m-0 title"></h3>
             </div>
+            <div class="body">
+              <div class="partialViewer">
+                <div data-id="1" class="partial">
+                  <p>
+                    Hello Guys this is Introduction part Hope you will like it!
+                  </p>
+                </div>
+                <div data-id="2" class="partial">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="m-0 text-center">New White Label User</h3>
+                    </div>
+                    <div class="card-body">
+                      <form
+                        class="m-0 p-0 row"
+                        method="POST"
+                        action="/super/new_user"
+                      >
+                        <div class="col-md-4 mb-2">
+                          <input
+                            required
+                            type="text"
+                            name="name"
+                            placeholder="Enter name"
+                            class="form-control"
+                          />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                          <input
+                            required
+                            type="email"
+                            name="email"
+                            placeholder="Enter Email"
+                            class="form-control"
+                          />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                          <input
+                            required
+                            type="password"
+                            name="password"
+                            placeholder="Enter Password"
+                            class="form-control"
+                          />
+                        </div>
+                        <div class="col-md-4 mb-2 abs-ctr">
+                          <label>Primary</label>
+                          <input
+                            required
+                            type="color"
+                            name="primaryColor"
+                            value="#ffb63b"
+                          />
+                        </div>
+                        <div class="col-md-4 mb-2 abs-ctr">
+                          <label>Secondary</label>
+                          <input
+                            required
+                            type="color"
+                            name="secondaryColor"
+                            value="#021a36"
+                          />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                          <input
+                            required
+                            type="submit"
+                            name="submit"
+                            class="btn btn-primary"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="user-table mt-3">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Since</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% users.forEach(user => { %>
+                        <tr>
+                          <td><%= user.name %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.createdAt %></td>
+                          <td>
+                            <button
+                              class="btn actiontaker"
+                              data-id="<%= user.id %>"
+                            >
+                              <span class="fa fa-id-card"></span>
+                            </button>
+                          </td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div data-id="3" class="partial"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -50,8 +157,21 @@
             $(".full-container .main-container .head .title").text(
               divMap.find((d) => d[0] == targetId)[1]
             );
+            $(".full-container .main-container .head").addClass(
+              "animate__animated animate__fadeInDown"
+            );
+            setTimeout(() => {
+              $(".full-container .main-container .head").removeClass(
+                "animate__animated animate__fadeInDown"
+              );
+            }, 1000);
+            $(".partialViewer div.partial").hide();
+            $(".partialViewer div[data-id=" + targetId + "]").show();
           });
-
+          $(".partialViewer div.partial").hide();
+          $(".partialViewer div.partial").addClass(
+            "animate__animated animate__fadeInUp"
+          );
           $(".full-container .sidebar .body ul li[data-id=1]").click();
         });
       });
@@ -97,9 +217,10 @@
       }
 
       .full-container .sidebar .body ul li {
-        padding: 0.3rem 2rem;
+        padding: 0.4rem 2rem;
         cursor: pointer;
         transition: 0.1s;
+        opacity: 0.5;
       }
 
       .full-container .sidebar .body ul li:hover {
@@ -108,6 +229,11 @@
 
       .full-container .sidebar .body ul li.active {
         background: #ffffff26;
+        opacity: 1;
+      }
+
+      .full-container .main-container {
+        padding-right: 20px;
       }
 
       .full-container .main-container .head {
@@ -117,6 +243,27 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0px 3px 3px 0 #00000017;
+      }
+
+      .full-container .main-container .body {
+        margin-top: 20px;
+      }
+
+      .full-container .sidebar .body ul li svg {
+        margin-right: 5px;
+      }
+
+      .user-table table button.btn {
+        color: grey;
+      }
+
+      .user-table table button.btn:hover {
+        color: rgb(98, 98, 98);
+      }
+
+      input[type="color"] {
+        width: 30px;
+        height: 30px;
       }
     </style>
   </body>
