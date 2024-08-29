@@ -3,3 +3,4 @@ package-lock.json
 .vscode
 /tmp
 .env
+service/database.js
