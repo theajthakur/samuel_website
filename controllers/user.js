@@ -57,6 +57,7 @@ async function handleUserLogin(req, res) {
     if (!admin) return res.redirect("/logout");
     user.primaryColor = admin.primaryColor;
     user.secondaryColor = admin.secondaryColor;
+    user.backgroundColor = admin.backgroundColor;
     user.logoName = admin.logoName;
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {

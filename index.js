@@ -34,6 +34,7 @@ app.use((req, res, next) => {
   res.locals.authorName = process.env.AUTHOR_NAME;
   res.locals.primaryColor = req.user?.primaryColor;
   res.locals.secondaryColor = req.user?.secondaryColor;
+  res.locals.backgroundColor = req.user?.backgroundColor;
   res.locals.logoName = req.user?.logoName;
   next();
 });

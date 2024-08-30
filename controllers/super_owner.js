@@ -34,7 +34,8 @@ async function handleSuperPanel(req, res) {
 }
 
 async function handleCreateUser(req, res) {
-  var { name, email, primaryColor, secondaryColor, logoName } = req.body;
+  var { name, email, primaryColor, secondaryColor, backgroundColor, logoName } =
+    req.body;
   var { role, parent } = {
     role: "superadmin",
     parent: "1",
@@ -49,6 +50,7 @@ async function handleCreateUser(req, res) {
       parent,
       primaryColor,
       secondaryColor,
+      backgroundColor,
       logoName,
     });
     return res.redirect("/super/panel");

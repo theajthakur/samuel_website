@@ -67,15 +67,17 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <style>
-    <% if (locals.primaryColor && locals.secondaryColor) { %>
+    <% if (locals.primaryColor && locals.secondaryColor && locals.backgroundColor) { %>
     :root {
       --primary-color: <%= primaryColor %>;
       --secondary-color: <%= secondaryColor %>;
+      --background-color: <%= backgroundColor %>;
     }
     <% } else { %>
       :root {
-      --primary-color: var(--primary-color);
-      --secondary-color: var(--secondary-color);
+      --primary-color: rgb(255, 182, 59);
+      --secondary-color: rgb(2, 26, 54);
+      --background-color: rgb(0,0,0);
     }
   <% } %>
     body {
@@ -148,37 +150,33 @@
       padding: 0 calc(var(--bs-gutter-x) * 0.5);
     }
 
-    .text-mint {
-      color: rgb(11 94 82) !important;
-    }
-
-    .text-vj_grey {
-      color: var(--secondary-color) !important;
-    }
-
-    .text-vj_orange {
-      color: var(--primary-color) !important;
-    }
-    .bg-vj_grey {
-      background: var(--secondary-color) !important;
-    }
-    .bg-vj_orange {
+    .bg-vj_primary {
       background: var(--primary-color) !important;
     }
-    .btn-vj_orange {
-      --bs-btn-color: var(--secondary-color);
-      --bs-btn-bg: var(--primary-color);
-      --bs-btn-border-color: #ffa000;
-      --bs-btn-hover-color: #fff;
-      --bs-btn-hover-bg: #ffa000;
-      --bs-btn-hover-border-color: #ffa000;
-      --bs-btn-focus-shadow-rgb: 50, 62, 80;
-      --bs-btn-active-color: #787878;
-      --bs-btn-active-bg: #ffa715;
-      --bs-btn-active-border-color: #ffa000;
-      --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-      --bs-btn-disabled-color: var(--primary-color);
-      --bs-btn-disabled-bg: #ffc86b;
-      --bs-btn-disabled-border-color: #ffa000;
+    .bg-vj_secondary {
+      background: var(--secondary-color) !important;
+    }
+    .bg-vj_background {
+      background: var(--background-color) !important;
+    }
+    .btn-vj_primary {
+      --bs-btn-color: var(--background-color);
+      --bs-btn-bg: var(--primary-color); /* Background color of the button */
+      --bs-btn-hover-color: var(--background-color); /* Text color on hover */
+      --bs-btn-hover-bg: var(--primary-color);
+    }
+    .btn-vj_secondary {
+      --bs-btn-color: var(--background-color);
+      --bs-btn-bg: var(--secondary-color); /* Background color of the button */
+      --bs-btn-hover-bg: var(--secondary-color); /* Background color on hover */
+      --bs-btn-hover-color: var(--background-color);
+    }
+
+    .alert-custom {
+      --bs-alert-color: var(--background-color);
+      --bs-alert-bg: var(--primary-color);
+      --bs-alert-border-color: var(--primary-color);
+      --bs-alert-link-color: var(--secondary-color);
+      opacity: 0.8 !important;
     }
 </style>

@@ -10,6 +10,7 @@ function setUser(user) {
       role: user.role,
       primaryColor: user?.primaryColor,
       secondaryColor: user?.secondaryColor,
+      backgroundColor: user?.backgroundColor,
       logo: user?.logoName,
     },
     secret

@@ -41,6 +41,11 @@ const Admin = sequelize.define(
       allowNull: false,
       defaultValue: "rgb(2, 26, 54)",
     },
+    backgroundColor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "rgb(2, 26, 54)",
+    },
     logoName: {
       type: DataTypes.STRING,
       allowNull: false,
