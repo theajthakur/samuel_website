@@ -65,108 +65,120 @@
   rel="stylesheet"
 />
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <style>
-  body {
-    overflow-x: hidden;
-    font-family: "Quicksand", sans-serif;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  g5,
-  h6,
-  p {
-    font-family: "Quicksand", sans-serif;
-  }
+    <% if (locals.primaryColor && locals.secondaryColor) { %>
+    :root {
+      --primary-color: <%= primaryColor %>;
+      --secondary-color: <%= secondaryColor %>;
+    }
+    <% } else { %>
+      :root {
+      --primary-color: var(--primary-color);
+      --secondary-color: var(--secondary-color);
+    }
+  <% } %>
+    body {
+      overflow-x: hidden;
+      font-family: "Quicksand", sans-serif;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    g5,
+    h6,
+    p {
+      font-family: "Quicksand", sans-serif;
+    }
 
-  .abs-ctr {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+    .abs-ctr {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  .tbl-ctr {
-    width: 100%;
-    overflow-x: scroll;
-    text-align: center;
-  }
+    .tbl-ctr {
+      width: 100%;
+      overflow-x: scroll;
+      text-align: center;
+    }
 
-  .form-group {
-    display: block;
-    margin: 10px 0;
-  }
+    .form-group {
+      display: block;
+      margin: 10px 0;
+    }
 
-  .text-right {
-    text-align: right;
-  }
+    .text-right {
+      text-align: right;
+    }
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
+    ::-webkit-scrollbar {
+      display: none;
+    }
 
-  .nobreakoverflow {
-    white-space: nowrap;
-    width: 100%;
-    overflow-x: scroll;
-  }
+    .nobreakoverflow {
+      white-space: nowrap;
+      width: 100%;
+      overflow-x: scroll;
+    }
 
-  .card .card-header {
-    background: #ffb63b;
-    color: black;
-    text-align: center;
-  }
+    .card .card-header {
+      background: var(--primary-color);
+      color: black;
+      text-align: center;
+    }
 
-  .card {
-    border-color: #ffb63b;
-    margin: 5px 0;
-  }
+    .card {
+      border-color: var(--primary-color);
+      margin: 5px 0;
+    }
 
-  .card .card-footer {
-    background: white;
-  }
+    .card .card-footer {
+      background: white;
+    }
 
-  .hover-zoom {
-    transition: 0.2s;
-    padding: 0 calc(var(--bs-gutter-x));
-    cursor: pointer;
-  }
+    .hover-zoom {
+      transition: 0.2s;
+      padding: 0 calc(var(--bs-gutter-x));
+      cursor: pointer;
+    }
 
-  .hover-zoom:hover {
-    padding: 0 calc(var(--bs-gutter-x) * 0.5);
-  }
+    .hover-zoom:hover {
+      padding: 0 calc(var(--bs-gutter-x) * 0.5);
+    }
 
-  .text-mint {
-    color: rgb(11 94 82) !important;
-  }
+    .text-mint {
+      color: rgb(11 94 82) !important;
+    }
 
-  .text-vj_grey {
-    color: #2b3e50 !important;
-  }
+    .text-vj_grey {
+      color: var(--secondary-color) !important;
+    }
 
-  .text-vj_orange {
-    color: #ffb63b !important;
-  }
-  .bg-vj_grey {
-    background: #2b3e50 !important;
-  }
-  .bg-vj_orange {
-    background: #ffb63b !important;
-  }
-  .btn-vj_orange {
-    --bs-btn-color: #2b3e50;
-    --bs-btn-bg: #ffb63b;
-    --bs-btn-border-color: #ffa000;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #ffa000;
-    --bs-btn-hover-border-color: #ffa000;
-    --bs-btn-focus-shadow-rgb: 50, 62, 80;
-    --bs-btn-active-color: #787878;
-    --bs-btn-active-bg: #ffa715;
-    --bs-btn-active-border-color: #ffa000;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #ffb63b;
-    --bs-btn-disabled-bg: #ffc86b;
-    --bs-btn-disabled-border-color: #ffa000;
-  }
+    .text-vj_orange {
+      color: var(--primary-color) !important;
+    }
+    .bg-vj_grey {
+      background: var(--secondary-color) !important;
+    }
+    .bg-vj_orange {
+      background: var(--primary-color) !important;
+    }
+    .btn-vj_orange {
+      --bs-btn-color: var(--secondary-color);
+      --bs-btn-bg: var(--primary-color);
+      --bs-btn-border-color: #ffa000;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #ffa000;
+      --bs-btn-hover-border-color: #ffa000;
+      --bs-btn-focus-shadow-rgb: 50, 62, 80;
+      --bs-btn-active-color: #787878;
+      --bs-btn-active-bg: #ffa715;
+      --bs-btn-active-border-color: #ffa000;
+      --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      --bs-btn-disabled-color: var(--primary-color);
+      --bs-btn-disabled-bg: #ffc86b;
+      --bs-btn-disabled-border-color: #ffa000;
+    }
 </style>

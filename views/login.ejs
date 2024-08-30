@@ -25,6 +25,7 @@
               style="opacity: 0.85; position: relative; bottom: 35px"
             >
               <form class="form form-login" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <input type="hidden" name="action" value="login" />
                 <div
                   class="card-header text-center animate__animated animate__fadeIn animate__delay-3s"

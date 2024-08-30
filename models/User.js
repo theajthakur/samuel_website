@@ -31,7 +31,7 @@ const User = sequelize.define(
     parent: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Admins", // Matches the table name of the Admin model
+        model: "Admins",
         key: "id",
       },
       onDelete: "CASCADE",

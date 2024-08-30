@@ -18,7 +18,8 @@
                 unsere Angebote zu optimieren!</b
               >
             </p>
-            <form class="cf-form row" method="POST" action="/contact.php">
+            <form class="cf-form row" method="POST" action="/footer_contact">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <img
                 src="/image/star_showcase.png"
                 style="

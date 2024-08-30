@@ -25,41 +25,37 @@
             <div class="body">
               <div class="partialViewer">
                 <div data-id="1" class="partial">
-                  <div class="text-center p-5">
-                    <h1>Willkommen im Personal Peak 360° Admin Dashboard</h1>
+                  <div class="text-center p-md-5">
+                    <h1><%= introHeading %></h1>
                     <p
                       class="animate__animated animate__zoomInUp animate__delay-1s"
                     >
-                      Hier können Sie Benutzer verwalten, Live-Chats führen,
-                      Termine koordinieren, Trainings- und Ernährungspläne sowie
-                      Stress- und Schlafpläne erstellen. Sie können
-                      Videoanalysen durchführen, das Verhalten der Nutzer
-                      tracken, ihre Ernährung überwachen und vieles mehr.
+                      <%= introPara1 %>
                     </p>
                     <div
                       class="animate__animated animate__zoomInUp animate__delay-2s"
                     >
-                      🚀 Exklusive Trainer-Tools - Jetzt entdecken!
+                      <%= introPara2 %>
                     </div>
                   </div>
                 </div>
                 <div data-id="2" class="partial">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="m-0 text-center">New White Label User</h3>
+                      <h3 class="m-0 text-center">New User</h3>
                     </div>
                     <div class="card-body">
                       <form
                         class="m-0 p-0 row"
                         method="POST"
-                        action="/super/new_user"
+                        action="/admin/new_user"
                       >
                         <input
                           type="hidden"
                           name="_csrf"
                           value="<%= csrfToken %>"
                         />
-                        <div class="col-md-4 mb-2">
+                        <div class="col-lg-3 col-md-4 mb-2">
                           <input
                             required
                             type="text"
@@ -68,7 +64,7 @@
                             class="form-control"
                           />
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-lg-3 col-md-4 mb-2">
                           <input
                             required
                             type="email"
@@ -77,7 +73,7 @@
                             class="form-control"
                           />
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-lg-3 col-md-4 mb-2">
                           <input
                             required
                             type="password"
@@ -86,30 +82,14 @@
                             class="form-control"
                           />
                         </div>
-                        <div class="col-md-4 mb-2 abs-ctr">
-                          <label>Primary</label>
-                          <input
-                            required
-                            type="color"
-                            name="primaryColor"
-                            value="#ffb63b"
-                          />
-                        </div>
-                        <div class="col-md-4 mb-2 abs-ctr">
-                          <label>Secondary</label>
-                          <input
-                            required
-                            type="color"
-                            name="secondaryColor"
-                            value="#021a36"
-                          />
-                        </div>
-                        <div class="col-md-4 mb-2">
+                        <div
+                          class="col-lg-3 col-md-4 offset-md-4 offset-lg-0 mb-2"
+                        >
                           <input
                             required
                             type="submit"
                             name="submit"
-                            class="btn btn-primary"
+                            class="btn w-100 btn-warning"
                           />
                         </div>
                       </form>

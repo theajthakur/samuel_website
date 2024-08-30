@@ -16,34 +16,29 @@ async function handleSuperLogin(req, res) {
     res.cookie("token", token);
     return res.redirect("/super/panel");
   } else {
-    return res.render("superadmin_login.ejs", {
+    return res.render("login", {
       error: "Invalid Credentials!",
     });
   }
 }
 
 async function handleSuper(req, res) {
-  return res.render("login.ejs");
+  return res.render("login");
 }
 
 async function handleSuperPanel(req, res) {
   const users = await Admin.findAll({});
-  return res.render("superowner.ejs", {
+  return res.render("superowner", {
     users: users,
   });
 }
 
 async function handleCreateUser(req, res) {
-  if (req.user?.role == "owner") {
-    var { name, email, primaryColor, secondaryColor, logoName } = req.body;
-    var { role, parent } = {
-      role: "superadmin",
-      parent: "1",
-    };
-  } else {
-    var { name, email, role, parent, primaryColor, secondaryColor, logoName } =
-      req.body;
-  }
+  var { name, email, primaryColor, secondaryColor, logoName } = req.body;
+  var { role, parent } = {
+    role: "superadmin",
+    parent: "1",
+  };
   const password = await bcrypt.hash(req.body.password, 10);
   try {
     await Admin.create({

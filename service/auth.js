@@ -4,10 +4,13 @@ const secret = "Ajay@1234";
 function setUser(user) {
   return jwt.sign(
     {
-      _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
+      primaryColor: user?.primaryColor,
+      secondaryColor: user?.secondaryColor,
+      logo: user?.logoName,
     },
     secret
   );

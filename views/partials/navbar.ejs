@@ -1,8 +1,13 @@
 <nav class="navbar navbar-expand-sm navbar-dark">
   <div class="container">
     <a class="navbar-brand" href="#"
-      ><img src="/image/logo.png" width="100px"
-    /></a>
+      ><% if (locals.logoName) { %>
+      <img src="/image/<%= logoName %>" width="100px" />
+      <% } else { %>
+      <img src="/image/logo.png" width="100px" />
+      <% } %></a
+    >
+
     <button
       class="navbar-toggler"
       type="button"

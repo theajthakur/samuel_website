@@ -23,6 +23,7 @@
               <div class="alert alert-danger" role="alert"><%= error %></div>
               <% } %>
               <form method="POST" action="/signup">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <div class="mb-3">
                   <label for="name" class="form-label">Full Name</label>
                   <input

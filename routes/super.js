@@ -8,10 +8,10 @@ const {
   handleCreateUser,
 } = require("../controllers/super_owner");
 
-router.get("/", NotrestrictTo(["owner"]), handleSuper);
-router.post("/", NotrestrictTo(["owner"]), handleSuperLogin);
+router.get("/", NotrestrictTo(["owner"], "/super/panel"), handleSuper);
+router.post("/", NotrestrictTo(["owner"], "/super/panel"), handleSuperLogin);
 
-router.get("/panel", restrictTo(["owner"]), handleSuperPanel);
-router.post("/new_user", restrictTo(["owner"]), handleCreateUser);
+router.get("/panel", restrictTo(["owner"], "/super"), handleSuperPanel);
+router.post("/new_user", restrictTo(["owner"], "/super"), handleCreateUser);
 
 module.exports = router;
