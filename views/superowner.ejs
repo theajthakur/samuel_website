@@ -207,6 +207,7 @@
                       type="checkbox"
                       name="ustatus"
                       id="ustatus"
+                      value="superadmin"
                     />
                     <label class="form-check-label" for="ustatus">
                       Activate Admin Account
@@ -289,8 +290,27 @@
                     return obj;
                   }, {});
                 if (!result) return false;
+                if (!result.ustatus) {
+                  result.ustatus = "deactivate";
+                }
+                console.log(result);
                 targetuser.name = result.uname;
                 targetuser.email = result.uemail;
+                targetuser.role = result.ustatus;
+
+                $.get(
+                  "/super/profile/update/" + targetuser.id,
+                  result,
+                  function (d) {
+                    if (!d.status == "success") {
+                      alert(d.message);
+                    } else {
+                      alert("Data Saved!");
+                      $("#user-manager").modal("hide");
+                    }
+                  }
+                );
+
                 return false;
               });
             $("#user-manager .modal-body .content button")

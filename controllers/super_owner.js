@@ -65,7 +65,8 @@ async function handleCreateUser(req, res) {
 
 async function handleSuperProfile(req, res) {
   const { action, id } = req.params;
-  if (!["view", "delete"].includes(action)) return res.end("Invalid Request!");
+  if (!["view", "delete", "update"].includes(action))
+    return res.end("Invalid Request!");
   const user = await Admin.findOne({ where: { id: id } });
   if (!user) return res.json({ error: "No User found!" });
   user.password = "********";
@@ -77,6 +78,20 @@ async function handleSuperProfile(req, res) {
         status: "success",
         id: id,
       });
+    });
+  } else if (action == "update") {
+    if (!req.query.uname && !req.query.uemail && !req.query.ustatus)
+      return res.json({
+        status: "error",
+        message: "Data Can't be empty!",
+        data: req.query,
+      });
+    const input = req.query;
+    Admin.update(
+      { name: input.uname, email: input.uemail, role: input.ustatus },
+      { where: { id: id } }
+    ).then((d) => {
+      return res.json(req.query);
     });
   }
 }
