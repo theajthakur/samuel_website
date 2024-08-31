@@ -4,3 +4,4 @@ package-lock.json
 /tmp
 .env
 service/database.js
+requirement.txt
