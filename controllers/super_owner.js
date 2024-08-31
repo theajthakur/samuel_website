@@ -63,9 +63,27 @@ async function handleCreateUser(req, res) {
   }
 }
 
+async function handleSuperProfile(req, res) {
+  const { action, id } = req.params;
+  if (!["view", "delete"].includes(action)) return res.end("Invalid Request!");
+  const user = await Admin.findOne({ where: { id: id } });
+  if (!user) return res.json({ error: "No User found!" });
+  user.password = "********";
+  if (action == "view") {
+    return res.json(user);
+  } else if (action == "delete") {
+    Admin.destroy({ where: { id: id } }).then((d) => {
+      res.json({
+        status: "success",
+        id: id,
+      });
+    });
+  }
+}
 module.exports = {
   handleSuperLogin,
   handleSuper,
   handleSuperPanel,
   handleCreateUser,
+  handleSuperProfile,
 };

@@ -180,11 +180,8 @@
               <button class="btn btn-danger">
                 <span class="fa fa-trash"></span> Delete
               </button>
-              <button class="btn btn-success user_status">
-                <span class="fa fa-laptop"></span> Deactivate
-              </button>
             </div>
-            <form class="user-update m-0 p-0">
+            <form class="user-update m-0 p-0 mt-3">
               <input type="hidden" name="userid" />
               <div class="row">
                 <div class="col-md-4 my-2">
@@ -202,6 +199,24 @@
                     type="email"
                     required
                   />
+                </div>
+                <div class="col-md-12 my-2">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="ustatus"
+                      id="ustatus"
+                    />
+                    <label class="form-check-label" for="ustatus">
+                      Activate Admin Account
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-12 my-2">
+                  <button class="btn btn-success">
+                    <span class="fa fa-save"></span> Save Profile
+                  </button>
                 </div>
               </div>
             </form>
@@ -222,59 +237,94 @@
         [3, "History", "history"],
       ];
       $(document).ready(() => {
-        $(".actiontaker").click(function () {
-          const targetId = $(this).data("id");
-          const targetuser = admins.find((d) => d.id == targetId);
-          if (!targetuser) return false;
+        $(".actiontaker")
+          .off("click")
+          .click(function () {
+            const targetId = $(this).data("id");
+            const targetuser = admins.find((d) => d.id == targetId);
+            if (!targetuser) return false;
+            // Reset the modal fields
+            $("#user-manager .modal-title").text("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='userid']"
+            ).val("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='uname']"
+            ).val("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='uemail']"
+            ).val("");
 
-          // Reset the modal fields
-          $("#user-manager .modal-title").text("");
-          $(
-            "#user-manager .modal-body form.user-update input[name='userid']"
-          ).val("");
-          $(
-            "#user-manager .modal-body form.user-update input[name='uname']"
-          ).val("");
-          $(
-            "#user-manager .modal-body form.user-update input[name='uemail']"
-          ).val("");
+            // Populate modal with the new user data
+            $("#user-manager .modal-title").text(targetuser.name);
+            $(
+              "#user-manager .modal-body form.user-update input[name='userid']"
+            ).val(targetuser.id);
+            $(
+              "#user-manager .modal-body form.user-update input[name='uname']"
+            ).val(targetuser.name);
+            $(
+              "#user-manager .modal-body form.user-update input[name='uemail']"
+            ).val(targetuser.email);
 
-          // Populate modal with the new user data
-          $("#user-manager .modal-title").text(targetuser.name);
-          $(
-            "#user-manager .modal-body form.user-update input[name='userid']"
-          ).val(targetuser.id);
-          $(
-            "#user-manager .modal-body form.user-update input[name='uname']"
-          ).val(targetuser.name);
-          $(
-            "#user-manager .modal-body form.user-update input[name='uemail']"
-          ).val(targetuser.email);
+            if (targetuser.role == "superadmin") {
+              $(
+                "#user-manager .modal-body form.user-update input[name='ustatus']"
+              ).prop("checked", true);
+            } else {
+              $(
+                "#user-manager .modal-body form.user-update input[name='ustatus']"
+              ).prop("checked", false);
+            }
 
-          $("#user-manager").modal("show");
+            $("#user-manager").modal("show");
 
-          // Unbind any previous click handlers before adding new ones
-          $("#user-manager .modal-body .content button")
-            .off("click")
-            .click(function () {
-              var index = $(this).index() + 1;
-              if (index == 1) {
-                window.location.href = "/super/profile/view/" + targetId;
-              } else if (index == 2) {
-                const confirmDelete = confirm(
-                  "Are you sure to Delete " + targetuser.name + "?"
-                );
-                if (confirmDelete) {
-                  $("#user-manager").modal("hide");
-                  $(
-                    ".user-table table tbody tr[data-id=" + targetuser.id + "]"
-                  ).remove();
-                } else {
-                  return false;
+            $("#user-manager .modal-body form.user-update")
+              .off("submit")
+              .submit(function () {
+                const result = $(this)
+                  .serializeArray()
+                  .reduce((obj, d) => {
+                    obj[d.name] = d.value;
+                    return obj;
+                  }, {});
+                if (!result) return false;
+                targetuser.name = result.uname;
+                targetuser.email = result.uemail;
+                return false;
+              });
+            $("#user-manager .modal-body .content button")
+              .off("click")
+              .click(function () {
+                var index = $(this).index() + 1;
+                if (index == 1) {
+                  window.location.href = "/super/profile/view/" + targetId;
+                } else if (index == 2) {
+                  const confirmDelete = confirm(
+                    "Are you sure to Delete " + targetuser.name + "?"
+                  );
+                  if (confirmDelete) {
+                    $.get(
+                      "/super/profile/delete/" + targetuser.id,
+                      function (d) {
+                        if (d.status == "success") {
+                          $("#user-manager").modal("hide");
+                          $(
+                            ".user-table table tbody tr[data-id=" +
+                              targetuser.id +
+                              "]"
+                          ).remove();
+                        } else {
+                          alert("Some error occured!");
+                        }
+                      }
+                    );
+                  } else {
+                    return false;
+                  }
                 }
-              }
-            });
-        });
+              });
+          });
 
         divMap.forEach((d) => {
           $(".full-container .sidebar .body ul").append(
