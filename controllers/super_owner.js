@@ -90,9 +90,24 @@ async function handleSuperProfile(req, res) {
     Admin.update(
       { name: input.uname, email: input.uemail, role: input.ustatus },
       { where: { id: id } }
-    ).then((d) => {
-      return res.json(req.query);
-    });
+    )
+      .then((d) => {
+        const message = `Data Updated for Admin ${input.uname}`;
+        return res.json({
+          status: "success",
+          message: message,
+        });
+      })
+      .catch((error) => {
+        var message = "Updation failed!";
+        if (error.name == "SequelizeUniqueConstraintError") {
+          message = "an Admin with same email id Already exists";
+        }
+        return res.json({
+          status: "error",
+          message: message,
+        });
+      });
   }
 }
 module.exports = {

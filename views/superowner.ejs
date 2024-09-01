@@ -7,7 +7,7 @@
   <body>
     <div class="full-container">
       <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-3 p-0">
           <div class="sidebar">
             <div class="header text-center p-2">
               <img src="/image/logo.png" />
@@ -17,144 +17,148 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-9 p-0">
           <div class="main-container">
-            <div class="head">
-              <h3 class="m-0 title"></h3>
-            </div>
-            <div class="body">
-              <div class="partialViewer">
-                <div data-id="1" class="partial">
-                  <div class="text-center p-5">
-                    <h1>Willkommen im Personal Peak 360° Admin Dashboard</h1>
-                    <p
-                      class="animate__animated animate__zoomInUp animate__delay-1s"
-                    >
-                      Hier können Sie Benutzer verwalten, Live-Chats führen,
-                      Termine koordinieren, Trainings- und Ernährungspläne sowie
-                      Stress- und Schlafpläne erstellen. Sie können
-                      Videoanalysen durchführen, das Verhalten der Nutzer
-                      tracken, ihre Ernährung überwachen und vieles mehr.
-                    </p>
-                    <div
-                      class="animate__animated animate__zoomInUp animate__delay-2s"
-                    >
-                      🚀 Exklusive Trainer-Tools - Jetzt entdecken!
-                    </div>
-                  </div>
-                </div>
-                <div data-id="2" class="partial">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="m-0 text-center">New White Label User</h3>
-                    </div>
-                    <div class="card-body">
-                      <form
-                        class="m-0 p-0 row"
-                        method="POST"
-                        action="/super/new_user"
+            <div class="container">
+              <div class="head">
+                <h3 class="m-0 title"></h3>
+              </div>
+              <div class="body">
+                <div class="partialViewer">
+                  <div data-id="1" class="partial">
+                    <div class="text-center p-5">
+                      <h1>Willkommen im Personal Peak 360° Admin Dashboard</h1>
+                      <p
+                        class="animate__animated animate__zoomInUp animate__delay-1s"
                       >
-                        <input
-                          type="hidden"
-                          name="_csrf"
-                          value="<%= csrfToken %>"
-                        />
-                        <div class="col-md-4 mb-2">
-                          <input
-                            required
-                            type="text"
-                            name="name"
-                            placeholder="Enter name"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="col-md-4 mb-2">
-                          <input
-                            required
-                            type="email"
-                            name="email"
-                            placeholder="Enter Email"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="col-md-4 mb-2">
-                          <input
-                            required
-                            type="password"
-                            name="password"
-                            placeholder="Enter Password"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="col-md-3 mb-2 abs-ctr">
-                          <label>Primary</label>
-                          <input
-                            required
-                            type="color"
-                            name="primaryColor"
-                            value="#ffb63b"
-                          />
-                        </div>
-                        <div class="col-md-3 mb-2 abs-ctr">
-                          <label>Secondary</label>
-                          <input
-                            required
-                            type="color"
-                            name="secondaryColor"
-                            value="#021a36"
-                          />
-                        </div>
-                        <div class="col-md-3 mb-2 abs-ctr">
-                          <label>Background</label>
-                          <input
-                            required
-                            type="color"
-                            name="backgroundColor"
-                            value="#000000"
-                          />
-                        </div>
-                        <div class="col-md-3 mb-2">
-                          <input
-                            required
-                            type="submit"
-                            name="submit"
-                            class="btn btn-primary"
-                          />
-                        </div>
-                      </form>
+                        Hier können Sie Benutzer verwalten, Live-Chats führen,
+                        Termine koordinieren, Trainings- und Ernährungspläne
+                        sowie Stress- und Schlafpläne erstellen. Sie können
+                        Videoanalysen durchführen, das Verhalten der Nutzer
+                        tracken, ihre Ernährung überwachen und vieles mehr.
+                      </p>
+                      <div
+                        class="animate__animated animate__zoomInUp animate__delay-2s"
+                      >
+                        🚀 Exklusive Trainer-Tools - Jetzt entdecken!
+                      </div>
                     </div>
                   </div>
-                  <div class="user-table mt-3">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Since</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% if (locals.users) { %> <% users.forEach(user => { %>
-                        <tr data-id="<%= user.id %>">
-                          <td><%= user.name %></td>
-                          <td><%= user.email %></td>
-                          <td><%= user.createdAt %></td>
-                          <td>
-                            <button
-                              class="btn actiontaker"
-                              data-id="<%= user.id %>"
-                            >
-                              <span class="fa fa-ellipsis-v"></span>
-                            </button>
-                          </td>
-                        </tr>
-                        <% }) %> <% } %>
-                      </tbody>
-                    </table>
+                  <div data-id="2" class="partial">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="m-0 text-center">New White Label User</h3>
+                      </div>
+                      <div class="card-body">
+                        <form
+                          class="m-0 p-0 row"
+                          method="POST"
+                          action="/super/new_user"
+                        >
+                          <input
+                            type="hidden"
+                            name="_csrf"
+                            value="<%= csrfToken %>"
+                          />
+                          <div class="col-md-4 mb-2">
+                            <input
+                              required
+                              type="text"
+                              name="name"
+                              placeholder="Enter name"
+                              class="form-control"
+                            />
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <input
+                              required
+                              type="email"
+                              name="email"
+                              placeholder="Enter Email"
+                              class="form-control"
+                            />
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <input
+                              required
+                              type="password"
+                              name="password"
+                              placeholder="Enter Password"
+                              class="form-control"
+                            />
+                          </div>
+                          <div class="col-md-3 mb-2 abs-ctr">
+                            <label>Primary</label>
+                            <input
+                              required
+                              type="color"
+                              name="primaryColor"
+                              value="#ffb63b"
+                            />
+                          </div>
+                          <div class="col-md-3 mb-2 abs-ctr">
+                            <label>Secondary</label>
+                            <input
+                              required
+                              type="color"
+                              name="secondaryColor"
+                              value="#021a36"
+                            />
+                          </div>
+                          <div class="col-md-3 mb-2 abs-ctr">
+                            <label>Background</label>
+                            <input
+                              required
+                              type="color"
+                              name="backgroundColor"
+                              value="#000000"
+                            />
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <input
+                              required
+                              type="submit"
+                              name="submit"
+                              class="btn btn-primary"
+                            />
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="user-table mt-3">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Since</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if (locals.users) { %> <% users.forEach(user => {
+                          %>
+                          <tr <% if (user.role!="superadmin" ) { %>
+                            class="disabled" <% } %> data-id="<%= user.id %>">
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.createdAt %></td>
+                            <td>
+                              <button
+                                class="btn actiontaker"
+                                data-id="<%= user.id %>"
+                              >
+                                <span class="fa fa-ellipsis-v"></span>
+                              </button>
+                            </td>
+                          </tr>
+                          <% }) %> <% } %>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
+                  <div data-id="3" class="partial"></div>
                 </div>
-                <div data-id="3" class="partial"></div>
               </div>
             </div>
           </div>
@@ -290,23 +294,41 @@
                     return obj;
                   }, {});
                 if (!result) return false;
+                $(
+                  ".user-table table tbody tr[data-id=" + targetId + "]"
+                ).removeClass("disabled");
                 if (!result.ustatus) {
                   result.ustatus = "deactivate";
+                  $(
+                    ".user-table table tbody tr[data-id=" + targetId + "]"
+                  ).addClass("disabled");
                 }
                 console.log(result);
-                targetuser.name = result.uname;
-                targetuser.email = result.uemail;
-                targetuser.role = result.ustatus;
-
                 $.get(
                   "/super/profile/update/" + targetuser.id,
                   result,
                   function (d) {
-                    if (!d.status == "success") {
-                      alert(d.message);
-                    } else {
-                      alert("Data Saved!");
+                    if (d.status == "success") {
+                      targetuser.name = result.uname;
+                      targetuser.email = result.uemail;
+                      targetuser.role = result.ustatus;
+                      $(
+                        ".user-table table tbody tr[data-id=" +
+                          targetId +
+                          "] td"
+                      )
+                        .eq(0)
+                        .text(targetuser.name);
+                      $(
+                        ".user-table table tbody tr[data-id=" +
+                          targetId +
+                          "] td"
+                      )
+                        .eq(1)
+                        .text(targetuser.email);
                       $("#user-manager").modal("hide");
+                    } else if (d.status == "error") {
+                      alert(d.message);
                     }
                   }
                 );
@@ -438,10 +460,6 @@
         opacity: 1;
       }
 
-      .full-container .main-container {
-        padding-right: 20px;
-      }
-
       .full-container .main-container .head {
         text-align: center;
         height: 20vh;
@@ -470,6 +488,10 @@
       input[type="color"] {
         width: 30px;
         height: 30px;
+      }
+
+      .user-table table tbody tr.disabled td {
+        background: #ff70709c !important;
       }
     </style>
   </body>
