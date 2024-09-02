@@ -107,7 +107,8 @@
                       </thead>
                       <tbody>
                         <% if (locals.users) { %> <% users.forEach(user => { %>
-                        <tr>
+                        <tr <% if (user.role=="deactivate" ) { %>
+                          class="disabled" <% } %> data-id="<%= user.id %>">
                           <td><%= user.name %></td>
                           <td><%= user.email %></td>
                           <td><%= user.createdAt %></td>
@@ -116,7 +117,7 @@
                               class="btn actiontaker"
                               data-id="<%= user.id %>"
                             >
-                              <span class="fa fa-id-card"></span>
+                              <span class="fa fa-ellipsis-v"></span>
                             </button>
                           </td>
                         </tr>
@@ -132,6 +133,75 @@
         </div>
       </div>
     </div>
+    <div class="modal" id="user-manager">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <button class="btn btn-primary">
+                <span class="fa fa-user"></span> Profile
+              </button>
+              <button class="btn btn-danger">
+                <span class="fa fa-trash"></span> Delete
+              </button>
+            </div>
+            <form class="user-update m-0 p-0 mt-3">
+              <input type="hidden" name="userid" />
+              <div class="row">
+                <div class="col-md-4 my-2">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="uname"
+                    required
+                  />
+                </div>
+                <div class="col-md-8 my-2">
+                  <input
+                    class="form-control"
+                    name="uemail"
+                    type="email"
+                    required
+                  />
+                </div>
+                <div class="col-md-12 my-2">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="ustatus"
+                      id="ustatus"
+                      value="normal"
+                    />
+                    <label class="form-check-label" for="ustatus">
+                      Activate User Account
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-12 my-2">
+                  <button class="btn btn-success">
+                    <span class="fa fa-save"></span> Save Profile
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if (locals.users) { %>
+      <script>
+        var users = <%- JSON.stringify(users) %>;
+      </script>
+      <% } %>
     <script>
       const divMap = [
         [1, "Introduction", "comment"],
@@ -139,6 +209,131 @@
         [3, "History", "history"],
       ];
       $(document).ready(() => {
+        $(".actiontaker")
+          .off("click")
+          .click(function () {
+            const targetId = $(this).data("id");
+            const targetuser = users.find((d) => d.id == targetId);
+            if (!targetuser) return false;
+            // Reset the modal fields
+            $("#user-manager .modal-title").text("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='userid']"
+            ).val("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='uname']"
+            ).val("");
+            $(
+              "#user-manager .modal-body form.user-update input[name='uemail']"
+            ).val("");
+
+            // Populate modal with the new user data
+            $("#user-manager .modal-title").text(targetuser.name);
+            $(
+              "#user-manager .modal-body form.user-update input[name='userid']"
+            ).val(targetuser.id);
+            $(
+              "#user-manager .modal-body form.user-update input[name='uname']"
+            ).val(targetuser.name);
+            $(
+              "#user-manager .modal-body form.user-update input[name='uemail']"
+            ).val(targetuser.email);
+
+            if ((targetuser.role) == "normal") {
+              $(
+                "#user-manager .modal-body form.user-update input[name='ustatus']"
+              ).prop("checked", true);
+            } else {
+              $(
+                "#user-manager .modal-body form.user-update input[name='ustatus']"
+              ).prop("checked", false);
+            }
+
+            $("#user-manager").modal("show");
+
+            $("#user-manager .modal-body form.user-update")
+              .off("submit")
+              .submit(function () {
+                const result = $(this)
+                  .serializeArray()
+                  .reduce((obj, d) => {
+                    obj[d.name] = d.value;
+                    return obj;
+                  }, {});
+                if (!result) return false;
+                $(
+                  ".user-table table tbody tr[data-id=" + targetId + "]"
+                ).removeClass("disabled");
+                if (!result.ustatus) {
+                  result.ustatus = "deactivate";
+                  $(
+                    ".user-table table tbody tr[data-id=" + targetId + "]"
+                  ).addClass("disabled");
+                }
+                console.log(result);
+                $.get(
+                  "/admin/profile/update/" + targetuser.id,
+                  result,
+                  function (d) {
+                    if (d.status == "success") {
+                      targetuser.name = result.uname;
+                      targetuser.email = result.uemail;
+                      targetuser.role = result.ustatus;
+                      $(
+                        ".user-table table tbody tr[data-id=" +
+                          targetId +
+                          "] td"
+                      )
+                        .eq(0)
+                        .text(targetuser.name);
+                      $(
+                        ".user-table table tbody tr[data-id=" +
+                          targetId +
+                          "] td"
+                      )
+                        .eq(1)
+                        .text(targetuser.email);
+                      $("#user-manager").modal("hide");
+                    } else if (d.status == "error") {
+                      alert(d.message);
+                    }
+                  }
+                );
+
+                return false;
+              });
+            $("#user-manager .modal-body .content button")
+              .off("click")
+              .click(function () {
+                var index = $(this).index() + 1;
+                if (index == 1) {
+                  window.location.href = "/admin/profile/view/" + targetId;
+                } else if (index == 2) {
+                  const confirmDelete = confirm(
+                    "Are you sure to Delete " + targetuser.name + "?"
+                  );
+                  if (confirmDelete) {
+                    $.get(
+                      "/admin/profile/delete/" + targetuser.id,
+                      function (d) {
+                        if (d.status == "success") {
+                          $("#user-manager").modal("hide");
+                          $(
+                            ".user-table table tbody tr[data-id=" +
+                              targetuser.id +
+                              "]"
+                          ).remove();
+                        } else {
+                          alert("Some error occured!");
+                        }
+                      }
+                    );
+                  } else {
+                    return false;
+                  }
+                }
+              });
+          });
         divMap.forEach((d) => {
           $(".full-container .sidebar .body ul").append(
             "<li data-id='" +
@@ -263,6 +458,10 @@
       input[type="color"] {
         width: 30px;
         height: 30px;
+      }
+
+      .user-table table tbody tr.disabled td {
+        background: #ff70709c !important;
       }
     </style>
   </body>

@@ -83,4 +83,58 @@ async function handleCreateUser(req, res) {
     });
   }
 }
-module.exports = { handleAdminLogin, handleAdminPanel, handleCreateUser };
+
+async function handleAdminProfile(req, res) {
+  const { action, id } = req.params;
+  if (!["view", "delete", "update"].includes(action))
+    return res.end("Invalid Request!");
+  const user = await User.findOne({ where: { id: id } });
+  if (!user) return res.json({ error: "No User found!" });
+  user.password = "********";
+  if (action == "view") {
+    return res.json(user);
+  } else if (action == "delete") {
+    User.destroy({ where: { id: id } }).then((d) => {
+      res.json({
+        status: "success",
+        id: id,
+      });
+    });
+  } else if (action == "update") {
+    if (!req.query.uname && !req.query.uemail && !req.query.ustatus)
+      return res.json({
+        status: "error",
+        message: "Data Can't be empty!",
+        data: req.query,
+      });
+    const input = req.query;
+    User.update(
+      { name: input.uname, email: input.uemail, role: input.ustatus },
+      { where: { id: id } }
+    )
+      .then((d) => {
+        const message = `Data Updated for user ${input.uname}`;
+        return res.json({
+          status: "success",
+          message: message,
+        });
+      })
+      .catch((error) => {
+        var message = "Updation failed!";
+        if (error.name == "SequelizeUniqueConstraintError") {
+          message = "an user with same email id Already exists";
+        }
+        return res.json({
+          status: "error",
+          message: message,
+        });
+      });
+  }
+}
+
+module.exports = {
+  handleAdminLogin,
+  handleAdminPanel,
+  handleCreateUser,
+  handleAdminProfile,
+};

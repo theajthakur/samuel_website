@@ -5,12 +5,17 @@ const {
   handleAdminLogin,
   handleAdminPanel,
   handleCreateUser,
+  handleAdminProfile,
 } = require("../controllers/admin");
 
 router.get("/", NotrestrictTo(["superadmin"], "/admin/panel"), (req, res) => {
   return res.render("login");
 });
-
+router.get(
+  "/profile/:action/:id",
+  restrictTo(["superadmin"], "/admin"),
+  handleAdminProfile
+);
 router.post(
   "/",
   NotrestrictTo(["superadmin"], "/admin/panel"),

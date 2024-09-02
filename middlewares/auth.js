@@ -10,6 +10,11 @@ function checkForAuthentication(req, res, next) {
   if (!token) return null;
   const user = getUser(token);
   req.user = user;
+  if (user.role == "deactivate")
+    return res.json({
+      error: "Account Deactivated! Contact Administrator.",
+      profile: user,
+    });
   next();
 }
 
