@@ -13,7 +13,7 @@ router.get("/", NotrestrictTo(["owner"], "/super/panel"), handleSuper);
 router.post("/", NotrestrictTo(["owner"], "/super/panel"), handleSuperLogin);
 
 router.get("/panel", restrictTo(["owner"], "/super"), handleSuperPanel);
-router.get(
+router.post(
   "/profile/:action/:id",
   restrictTo(["owner"], "/super"),
   handleSuperProfile

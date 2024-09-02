@@ -16,6 +16,7 @@ async function handleSuperLogin(req, res) {
     res.cookie("token", token);
     return res.redirect("/super/panel");
   } else {
+    console.log(req.body);
     return res.render("login", {
       error: "Invalid Credentials!",
     });
@@ -65,12 +66,15 @@ async function handleCreateUser(req, res) {
 
 async function handleSuperProfile(req, res) {
   const { action, id } = req.params;
-  if (!["view", "delete", "update"].includes(action))
+  if (!["view", "create", "delete", "update"].includes(action))
     return res.end("Invalid Request!");
   const user = await Admin.findOne({ where: { id: id } });
   if (!user) return res.json({ error: "No User found!" });
   user.password = "********";
-  if (action == "view") {
+  if (action == "create") {
+    console.log(req.body);
+    return res.json({ message: "Under Maintenance!" });
+  } else if (action == "view") {
     return res.json(user);
   } else if (action == "delete") {
     Admin.destroy({ where: { id: id } }).then((d) => {
@@ -80,13 +84,13 @@ async function handleSuperProfile(req, res) {
       });
     });
   } else if (action == "update") {
-    if (!req.query.uname && !req.query.uemail && !req.query.ustatus)
+    if (!req.body.uname && !req.body.uemail && !req.body.ustatus)
       return res.json({
         status: "error",
         message: "Data Can't be empty!",
         data: req.query,
       });
-    const input = req.query;
+    const input = req.body;
     Admin.update(
       { name: input.uname, email: input.uemail, role: input.ustatus },
       { where: { id: id } }

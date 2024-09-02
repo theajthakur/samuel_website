@@ -184,6 +184,9 @@
               <button class="btn btn-danger">
                 <span class="fa fa-trash"></span> Delete
               </button>
+              <form method="POST" class="dynamicUserProfile m-0 p-0">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              </form>
             </div>
             <form class="user-update m-0 p-0 mt-3">
               <input type="hidden" name="userid" />
@@ -218,6 +221,7 @@
                     </label>
                   </div>
                 </div>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <div class="col-md-12 my-2">
                   <button class="btn btn-success">
                     <span class="fa fa-save"></span> Save Profile
@@ -304,7 +308,7 @@
                   ).addClass("disabled");
                 }
                 console.log(result);
-                $.get(
+                $.post(
                   "/super/profile/update/" + targetuser.id,
                   result,
                   function (d) {
@@ -340,14 +344,21 @@
               .click(function () {
                 var index = $(this).index() + 1;
                 if (index == 1) {
+                  $(".dynamicUserProfile").attr(
+                    "action",
+                    "/super/profile/view/" + targetId
+                  );
+                  $(".dynamicUserProfile").submit();
+                  return false;
                   window.location.href = "/super/profile/view/" + targetId;
                 } else if (index == 2) {
                   const confirmDelete = confirm(
                     "Are you sure to Delete " + targetuser.name + "?"
                   );
                   if (confirmDelete) {
-                    $.get(
+                    $.post(
                       "/super/profile/delete/" + targetuser.id,
+                      { _csrf: $("input[name=_csrf]").val() },
                       function (d) {
                         if (d.status == "success") {
                           $("#user-manager").modal("hide");
