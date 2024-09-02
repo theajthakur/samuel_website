@@ -18,15 +18,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const csrfProtection = csrf({
-  cookie: {
-    httpOnly: true, // Helps to prevent client-side scripts from accessing the token
-    secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
-    sameSite: "Strict", // Adjust as needed (can be 'Lax' or 'None')
-  },
-});
+// const csrfProtection = csrf({
+//   cookie: {
+//     httpOnly: true, // Helps to prevent client-side scripts from accessing the token
+//     secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
+//     sameSite: "Strict", // Adjust as needed (can be 'Lax' or 'None')
+//   },
+// });
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 app.use(checkForAuthentication);
 app.use((req, res, next) => {
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   res.locals.primaryColor = req.user?.primaryColor;
   res.locals.secondaryColor = req.user?.secondaryColor;
   res.locals.backgroundColor = req.user?.backgroundColor;
-  res.locals.logoName = req.user?.logoName;
+  res.locals.logoName = req.user?.logo;
   next();
 });
 app.use("/", staticRoute);

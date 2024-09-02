@@ -66,15 +66,12 @@ async function handleCreateUser(req, res) {
 
 async function handleSuperProfile(req, res) {
   const { action, id } = req.params;
-  if (!["view", "create", "delete", "update"].includes(action))
+  if (!["view", "delete", "update"].includes(action))
     return res.end("Invalid Request!");
   const user = await Admin.findOne({ where: { id: id } });
   if (!user) return res.json({ error: "No User found!" });
   user.password = "********";
-  if (action == "create") {
-    console.log(req.body);
-    return res.json({ message: "Under Maintenance!" });
-  } else if (action == "view") {
+  if (action == "view") {
     return res.json(user);
   } else if (action == "delete") {
     Admin.destroy({ where: { id: id } }).then((d) => {
@@ -114,10 +111,47 @@ async function handleSuperProfile(req, res) {
       });
   }
 }
+
+async function handleUploadImage(req, res) {
+  const { type, id } = req.params;
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  const uploadedFileName = req.file.filename;
+
+  try {
+    const user = await Admin.findOne({ where: { id: id } });
+    if (!user) return res.json({ error: "No User found!" });
+    if (user.logoName && user.logoName !== "logo.png") {
+      const fs = require("fs");
+      const filePath = "public/uploads/" + user.logoName;
+      try {
+        fs.unlinkSync(filePath);
+        console.log("File deleted successfully");
+      } catch (err) {
+        console.error("Error deleting the file:", err.message);
+      }
+    }
+    await Admin.update({ logoName: uploadedFileName }, { where: { id: id } });
+    return res.json({
+      status: "success",
+      message: "File Uploaded",
+      file: req.file,
+    });
+  } catch (error) {
+    return res.json({
+      status: "error",
+      message: "Logo not updated!",
+      file: req.file,
+    });
+  }
+}
 module.exports = {
   handleSuperLogin,
   handleSuper,
   handleSuperPanel,
   handleCreateUser,
   handleSuperProfile,
+  handleUploadImage,
 };

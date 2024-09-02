@@ -184,6 +184,9 @@
               <button class="btn btn-danger">
                 <span class="fa fa-trash"></span> Delete
               </button>
+              <button class="btn btn-warning">
+                <span class="fa fa-image"></span> Upload Logo
+              </button>
               <form method="POST" class="dynamicUserProfile m-0 p-0">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               </form>
@@ -233,6 +236,13 @@
         </div>
       </div>
     </div>
+    <input
+      type="file"
+      id="imageUpload"
+      name="image"
+      accept="image/*"
+      style="display: none"
+    />
     <% if (locals.users) { %>
     <script>
       var admins = <%- JSON.stringify(users) %>;
@@ -249,6 +259,32 @@
         $(".actiontaker")
           .off("click")
           .click(function () {
+            $("#imageUpload").on("change", function () {
+              var formData = new FormData();
+              var file = $("#imageUpload")[0].files[0];
+              formData.append("image", file);
+
+              $.ajax({
+                url:
+                  "/super/upload/logo/" +
+                  $(".user-update input[name=userid]").val(),
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                  console.log(response);
+                  $("#imageUpload").val("");
+                  alert("Uploaded");
+                },
+                error: function (xhr, status, error) {
+                  console.log(error);
+                  $("#imageUpload").remove();
+                  alert("failed");
+                },
+              });
+            });
+
             const targetId = $(this).data("id");
             const targetuser = admins.find((d) => d.id == targetId);
             if (!targetuser) return false;
@@ -375,6 +411,8 @@
                   } else {
                     return false;
                   }
+                } else if (index == 3) {
+                  $("input#imageUpload").click();
                 }
               });
           });
