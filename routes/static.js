@@ -4,7 +4,7 @@ const { handleUserLogin, handleHomepage } = require("../controllers/user");
 const User = require("../models/User");
 const router = express.Router();
 
-router.get("/", restrictTo(["NORMAL"]), handleHomepage);
+router.get("/", restrictTo(["normal"]), handleHomepage);
 
 router.get("/login", (req, res) => {
   res.render("login.ejs");
@@ -17,7 +17,7 @@ router.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-router.get("/profile", restrictTo(["NORMAL", "ADMIN"]), (req, res) => {
+router.get("/profile", restrictTo(["normal"]), (req, res) => {
   return res.status(200).json(req.user);
 });
 

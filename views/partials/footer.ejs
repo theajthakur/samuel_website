@@ -1,5 +1,13 @@
-<footer class="animate__animated animate__zoomInUp animate__delay-1s">
-  <div class="footer-separator"></div>
+<footer class="animate__animated animate__fadeIn">
+  <div class="footer-separator">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path
+        fill="<%= secondaryColor %>"
+        fill-opacity="1"
+        d="M0,160L48,181.3C96,203,192,245,288,250.7C384,256,480,224,576,197.3C672,171,768,149,864,149.3C960,149,1056,171,1152,181.3C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+      ></path>
+    </svg>
+  </div>
   <div class="footer-container">
     <div class="container">
       <div class="row">
@@ -99,15 +107,10 @@
     background: <%= secondaryColor %>;
     color: rgb(255, 255, 255);
   }
-  .footer-separator {
-    background: <%= secondaryColor %>;
-    min-height: 100px;
-    border-top: 10px solid <%= primaryColor %>;
-    background-size: cover;
-  }
 
-  footer {
-    margin-top: 100px;
+  .footer-separator svg {
+    position: relative;
+    top: 1px;
   }
 
   footer .heading {
