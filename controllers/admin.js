@@ -55,7 +55,6 @@ async function handleAdminPanel(req, res) {
     introPara1: process.env.ADMIN_INTRODUCTION_PARAGRAPH1,
     introPara2: process.env.ADMIN_INTRODUCTION_PARAGRAPH2,
     users: users,
-    csrfToken: req.csrfToken(),
   });
 }
 

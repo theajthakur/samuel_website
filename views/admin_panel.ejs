@@ -206,7 +206,7 @@
       const divMap = [
         [1, "Introduction", "comment"],
         [2, "Users", "user"],
-        [3, "Settings", "gear"],
+        [99, "Logout", "sign-out"],
       ];
       $(document).ready(() => {
         $(".actiontaker")
@@ -346,6 +346,10 @@
           );
           $(".full-container .sidebar .body ul li").click(function () {
             const targetId = $(this).data("id");
+            if(targetId==99){
+              window.location.href="/logout";
+              return false;
+            }
             $(".full-container .sidebar .body ul li").removeClass("active");
             $(this).addClass("active");
             $(".full-container .main-container .head .title").text(
