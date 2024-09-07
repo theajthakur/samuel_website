@@ -10,7 +10,7 @@
         <div class="col-md-4 col-lg-3 p-0">
           <div class="sidebar">
             <div class="header text-center p-2">
-              <img src="/image/logo.png" />
+              <img src="/image/logo.png" width="100px" />
             </div>
             <div class="body">
               <ul></ul>
@@ -170,6 +170,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title"></h4>
+            <img src="/uploads/" width="100px" />
             <button
               type="button"
               class="btn-close"
@@ -302,6 +303,10 @@
 
             // Populate modal with the new user data
             $("#user-manager .modal-title").text(targetuser.name);
+            $("#user-manager .modal-header img").attr(
+              "src",
+              "/uploads/" + targetuser.logoName
+            );
             $(
               "#user-manager .modal-body form.user-update input[name='userid']"
             ).val(targetuser.id);
