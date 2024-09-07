@@ -82,13 +82,14 @@
                             class="form-control"
                           />
                         </div>
-                        
-                        <div class="col-lg-3 col-md-4 offset-md-4 offset-lg-0 mb-2">
-                          <div class="form-check-inline abs-ctr">
-                            <input type="checkbox" name="usertype" value="loweradmin" class="form-check-input" id="usertype">
-                            <label for="usertype" class="form-check-label">Loweradmin</label>
-                          </div>
-                        </div>                          
+                        <% if (locals.myRole && myRole=="superadmin") { %>
+                          <div class="col-lg-3 col-md-4 offset-md-4 offset-lg-0 mb-2">
+                            <div class="form-check-inline abs-ctr">
+                              <input type="checkbox" name="usertype" value="loweradmin" class="form-check-input" id="usertype">
+                              <label for="usertype" class="form-check-label">Loweradmin</label>
+                            </div>
+                          </div>   
+                        <% } %>                       
                         <div
                           class="col-lg-3 col-md-4 offset-md-4 offset-lg-0 mb-2"
                         >
@@ -114,8 +115,17 @@
                       </thead>
                       <tbody>
                         <% if (locals.users) { %> <% users.forEach(user => { %>
-                        <tr <% if (user.role=="deactivate" ) { %>
-                          class="disabled" <% } %> data-id="<%= user.id %>">
+                          <tr 
+                          <% 
+                            let className = '';
+                            if (user.role === "deactivate") {
+                              className = 'disabled';
+                            } else if (user.role === "loweradmin") {
+                              className = 'loweradmin';
+                            }
+                          %>
+                          class="<%= className %>" 
+                          data-id="<%= user.id %>">
                           <td><%= user.name %></td>
                           <td><%= user.email %></td>
                           <td><%= user.createdAt %></td>
@@ -313,15 +323,21 @@
               .off("click")
               .click(function () {
                 var index = $(this).index() + 1;
+                let delete_type="delete";
+                    let roledata="user";
+                    if(targetuser.role=="loweradmin"){
+                      delete_type="delete_lower";
+                      roledata="loweradmin";
+                    }
                 if (index == 1) {
-                  window.location.href = "/admin/profile/view/" + targetId;
+                  window.location.href = "/admin/profile/view/" + targetId+"?roledata="+roledata;
                 } else if (index == 2) {
                   const confirmDelete = confirm(
                     "Are you sure to Delete " + targetuser.name + "?"
                   );
                   if (confirmDelete) {
                     $.get(
-                      "/admin/profile/delete/" + targetuser.id,
+                      "/admin/profile/"+delete_type+"/" + targetuser.id, {roledata:roledata},
                       function (d) {
                         if (d.status == "success") {
                           $("#user-manager").modal("hide");
@@ -474,7 +490,10 @@
       .user-table table tbody tr.disabled td {
         background: #ff70709c !important;
       }
+
+      .user-table table tbody tr.loweradmin td {
+        background: #70ffbc9c !important;
+      }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   </body>
 </html>

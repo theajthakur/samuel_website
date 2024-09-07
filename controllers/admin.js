@@ -50,11 +50,14 @@ async function handleAdminLogin(req, res) {
 
 async function handleAdminPanel(req, res) {
   const users = await User.findAll({ where: { parent: req.user.id } });
+  const loweradmins = await Admin.findAll({ where: { parent: req.user.id } });
+  const combinedResults = [...users, ...loweradmins];
   return res.render("admin_panel", {
     introHeading: process.env.ADMIN_INTRODUCTION_HEADING,
     introPara1: process.env.ADMIN_INTRODUCTION_PARAGRAPH1,
     introPara2: process.env.ADMIN_INTRODUCTION_PARAGRAPH2,
-    users: users,
+    myRole: req.user.role,
+    users: combinedResults,
   });
 }
 
@@ -66,12 +69,12 @@ async function handleCreateUser(req, res) {
   };
   const password = await bcrypt.hash(req.body.password, 10);
   try {
-    if (usertype && usertype == "loweradmin") {
+    if (usertype && usertype == "loweradmin" && req.user.role == "superadmin") {
       const { primaryColor, secondaryColor, backgroundColor, logo } = req.user;
       await Admin.create({
         name,
         email,
-        role,
+        role: "loweradmin",
         password,
         parent,
         primaryColor,
@@ -100,15 +103,34 @@ async function handleCreateUser(req, res) {
 
 async function handleAdminProfile(req, res) {
   const { action, id } = req.params;
-  if (!["view", "delete", "update"].includes(action))
+  let user = [];
+  let loweradmin = [];
+  if (!["view", "delete", "delete_lower", "update"].includes(action))
     return res.end("Invalid Request!");
-  const user = await User.findOne({ where: { id: id } });
-  if (!user) return res.json({ error: "No User found!" });
-  user.password = "********";
+  if (req.query.roledata == "loweradmin") {
+    loweradmin = await Admin.findOne({ where: { id: id } });
+    if (!loweradmin) return res.json({ error: "No Admin found!" });
+  } else {
+    user = await User.findOne({ where: { id: id } });
+    if (!user) return res.json({ error: "No User found!" });
+    user.password = "********";
+  }
   if (action == "view") {
-    return res.json(user);
+    if (req.query.roledata == "loweradmin") {
+      loweradmin.password = "******";
+      return res.json(loweradmin);
+    } else {
+      return res.json(user);
+    }
   } else if (action == "delete") {
     User.destroy({ where: { id: id } }).then((d) => {
+      res.json({
+        status: "success",
+        id: id,
+      });
+    });
+  } else if (action == "delete_lower") {
+    Admin.destroy({ where: { id: id, parent: req.user.id } }).then((d) => {
       res.json({
         status: "success",
         id: id,

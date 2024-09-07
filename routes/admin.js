@@ -8,20 +8,28 @@ const {
   handleAdminProfile,
 } = require("../controllers/admin");
 
-router.get("/", NotrestrictTo(["superadmin"], "/admin/panel"), (req, res) => {
-  return res.render("login");
-});
+router.get(
+  "/",
+  NotrestrictTo(["superadmin", "loweradmin"], "/admin/panel"),
+  (req, res) => {
+    return res.render("login");
+  }
+);
 router.get(
   "/profile/:action/:id",
-  restrictTo(["superadmin"], "/admin"),
+  restrictTo(["superadmin", "loweradmin"], "/admin"),
   handleAdminProfile
 );
 router.post(
   "/",
-  NotrestrictTo(["superadmin"], "/admin/panel"),
+  NotrestrictTo(["superadmin", "loweradmin"], "/admin/panel"),
   handleAdminLogin
 );
 
-router.get("/panel", restrictTo(["superadmin"], "/admin"), handleAdminPanel);
+router.get(
+  "/panel",
+  restrictTo(["superadmin", "loweradmin"], "/admin"),
+  handleAdminPanel
+);
 router.post("/new_user", handleCreateUser);
 module.exports = router;
