@@ -59,13 +59,28 @@ async function handleAdminPanel(req, res) {
 }
 
 async function handleCreateUser(req, res) {
-  const { name, email } = req.body;
+  const { name, email, usertype } = req.body;
   const { role, parent } = {
     role: "NORMAL",
     parent: req.user.id,
   };
   const password = await bcrypt.hash(req.body.password, 10);
   try {
+    if (usertype && usertype == "loweradmin") {
+      const { primaryColor, secondaryColor, backgroundColor, logo } = req.user;
+      await Admin.create({
+        name,
+        email,
+        role,
+        password,
+        parent,
+        primaryColor,
+        secondaryColor,
+        backgroundColor,
+        logoName: logo,
+      });
+      return res.redirect("/admin/panel");
+    }
     await User.create({
       name,
       email,
