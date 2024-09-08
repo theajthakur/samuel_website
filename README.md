@@ -1,5 +1,7 @@
 # MyWebsite
 
+![MyWebsite Logo](public/image/logo.png)
+
 Welcome to MyWebsite! This platform provides a robust and interactive experience for users to manage their health and fitness data.
 
 ## Table of Contents
