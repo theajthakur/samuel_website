@@ -51,7 +51,7 @@ async function handleAdminLogin(req, res) {
 async function handleAdminPanel(req, res) {
   const users = await User.findAll({ where: { parent: req.user.id } });
   const loweradmins = await Admin.findAll({ where: { parent: req.user.id } });
-  const combinedResults = [...users, ...loweradmins];
+  const combinedResults = [...loweradmins, ...users];
   return res.render("admin_panel", {
     introHeading: process.env.ADMIN_INTRODUCTION_HEADING,
     introPara1: process.env.ADMIN_INTRODUCTION_PARAGRAPH1,
