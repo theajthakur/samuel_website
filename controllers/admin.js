@@ -62,6 +62,7 @@ async function handleAdminPanel(req, res) {
     introPara1: process.env.ADMIN_INTRODUCTION_PARAGRAPH1,
     introPara2: process.env.ADMIN_INTRODUCTION_PARAGRAPH2,
     myRole: req.user.role,
+    parentId: req.user.id,
     users: combinedResults,
   });
 }

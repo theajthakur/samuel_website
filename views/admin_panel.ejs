@@ -122,6 +122,8 @@
                               className = 'disabled';
                             } else if (user.role === "loweradmin") {
                               className = 'loweradmin';
+                            }else if(user.parent!==parentId){
+                              className = 'loweruser';
                             }
                           %>
                           class="<%= className %>" 
@@ -493,6 +495,10 @@
 
       .user-table table tbody tr.loweradmin td {
         background: #70ffbc9c !important;
+      }
+
+      .user-table table tbody tr.loweruser td {
+        background: #e7ff6c9c !important;
       }
     </style>
   </body>
