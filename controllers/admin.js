@@ -125,7 +125,7 @@ async function handleAdminProfile(req, res) {
       return res.json(user);
     }
   } else if (action == "delete") {
-    User.destroy({ where: { id: id } }).then((d) => {
+    User.destroy({ where: { id: id, parent: req.user.id } }).then((d) => {
       res.json({
         status: "success",
         id: id,
@@ -148,7 +148,7 @@ async function handleAdminProfile(req, res) {
     const input = req.query;
     User.update(
       { name: input.uname, email: input.uemail, role: input.ustatus },
-      { where: { id: id } }
+      { where: { id: id, parent: req.user.id } }
     )
       .then((d) => {
         const message = `Data Updated for user ${input.uname}`;
