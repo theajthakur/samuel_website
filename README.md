@@ -71,14 +71,6 @@ The website integrates various graphs and charts to enhance user experience, pro
 5. **Request and Chat**: Schedule appointments and interact with admins as needed.
 6. **Generate Reports**: Download PDF reports of your statistics.
 
-## Contributing
-
-We welcome contributions to improve MyWebsite. Please follow the guidelines in the [CONTRIBUTING.md](CONTRIBUTING.md) file for information on how to get involved.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 ---
 
 Thank you for using MyWebsite. We hope you find it valuable for managing and tracking your health and fitness journey!
