@@ -64,7 +64,7 @@ async function handleAdminPanel(req, res) {
 async function handleCreateUser(req, res) {
   const { name, email, usertype } = req.body;
   const { role, parent } = {
-    role: "NORMAL",
+    role: "normal",
     parent: req.user.id,
   };
   const password = await bcrypt.hash(req.body.password, 10);
@@ -108,10 +108,12 @@ async function handleAdminProfile(req, res) {
   if (!["view", "delete", "delete_lower", "update"].includes(action))
     return res.end("Invalid Request!");
   if (req.query.roledata == "loweradmin") {
-    loweradmin = await Admin.findOne({ where: { id: id } });
+    loweradmin = await Admin.findOne({
+      where: { id: id, parent: req.user.id },
+    });
     if (!loweradmin) return res.json({ error: "No Admin found!" });
   } else {
-    user = await User.findOne({ where: { id: id } });
+    user = await User.findOne({ where: { id: id, parent: req.user.id } });
     if (!user) return res.json({ error: "No User found!" });
     user.password = "********";
   }
