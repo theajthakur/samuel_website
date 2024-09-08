@@ -11,8 +11,6 @@ Welcome to MyWebsite! This platform provides a robust and interactive experience
 3. [User Features](#user-features)
 4. [How to Use](#how-to-use)
 5. [Graphical Integrations](#graphical-integrations)
-6. [Contributing](#contributing)
-7. [License](#license)
 
 ## Overview
 
